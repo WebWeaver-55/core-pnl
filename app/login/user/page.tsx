@@ -8,6 +8,7 @@ interface Course {
   title: string;
   description: string;
   price: number;
+  image_url?: string;
   preview_url?: string;
   file_url?: string;
 }
@@ -17,6 +18,7 @@ interface Ebook {
   title: string;
   description: string;
   price: number;
+  image_url?: string;
   preview_url?: string;
   file_url?: string;
 }
@@ -49,6 +51,8 @@ const TradingPlatform: React.FC = () => {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showTerms, setShowTerms] = useState<boolean>(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
     checkUser();
@@ -67,29 +71,169 @@ const TradingPlatform: React.FC = () => {
     }
   };
 
+  const TermsAndConditions = (): JSX.Element => (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white text-black max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">Terms & Conditions</h2>
+          <button 
+            onClick={() => setShowTerms(false)}
+            className="text-gray-500 hover:text-gray-800 text-2xl font-bold"
+          >
+            ×
+          </button>
+        </div>
+        
+        <div className="prose prose-sm max-w-none">
+          <p className="text-gray-600 mb-4"><strong>Last Updated:</strong> January 1, 2025</p>
+          
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">1. Acceptance of Terms</h3>
+          <p className="text-gray-700 mb-4">
+            By accessing and using Corepnl's services, you accept and agree to be bound by the terms and provision of this agreement. 
+            If you do not agree to abide by the above, please do not use this service.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">2. Services Description</h3>
+          <p className="text-gray-700 mb-4">
+            Corepnl provides digital services including but not limited to web development, software solutions, consulting, 
+            and technical support. We reserve the right to modify, suspend, or discontinue any service at any time without notice.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">3. User Responsibilities</h3>
+          <ul className="text-gray-700 mb-4 ml-4">
+            <li>• Provide accurate and complete information when required</li>
+            <li>• Use our services in compliance with applicable laws and regulations</li>
+            <li>• Not engage in any activity that could harm or disrupt our services</li>
+            <li>• Maintain the confidentiality of any account credentials</li>
+            <li>• Notify us immediately of any unauthorized use of your account</li>
+          </ul>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">4. Payment Terms</h3>
+          <p className="text-gray-700 mb-4">
+            Payment terms will be specified in individual service agreements. Unless otherwise stated, payments are due within 
+            30 days of invoice date. Late payments may incur additional fees. We reserve the right to suspend services for 
+            non-payment.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">5. Intellectual Property</h3>
+          <p className="text-gray-700 mb-4">
+            All content, trademarks, and intellectual property on our platform remain the property of Corepnl or our licensors. 
+            Custom work created for clients will be governed by separate agreements. Users may not reproduce, distribute, or 
+            create derivative works without explicit permission.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">6. Privacy and Data Protection</h3>
+          <p className="text-gray-700 mb-4">
+            We are committed to protecting your privacy. Personal information collected will be used solely for providing our 
+            services and will not be shared with third parties except as required by law or with your explicit consent. 
+            Please refer to our Privacy Policy for detailed information.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">7. Limitation of Liability</h3>
+          <p className="text-gray-700 mb-4">
+            Corepnl shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss 
+            of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other 
+            intangible losses resulting from your use of our services.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">8. Service Availability</h3>
+          <p className="text-gray-700 mb-4">
+            While we strive to maintain high availability, we do not guarantee uninterrupted service. Maintenance, updates, 
+            or unforeseen circumstances may cause temporary service interruptions. We will make reasonable efforts to notify 
+            users of planned maintenance.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">9. Termination</h3>
+          <p className="text-gray-700 mb-4">
+            Either party may terminate services with appropriate notice as specified in individual agreements. Upon termination, 
+            your right to use our services will cease immediately. Provisions that should survive termination will remain in effect.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">10. Dispute Resolution</h3>
+          <p className="text-gray-700 mb-4">
+            Any disputes arising from these terms will be resolved through binding arbitration in accordance with the rules of 
+            the American Arbitration Association. The arbitration will be conducted in English and the decision will be final 
+            and binding.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">11. Force Majeure</h3>
+          <p className="text-gray-700 mb-4">
+            Corepnl will not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, 
+            including but not limited to acts of God, natural disasters, war, terrorism, strikes, or government actions.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">12. Modifications</h3>
+          <p className="text-gray-700 mb-4">
+            We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to our 
+            website. Continued use of our services after changes constitutes acceptance of the new terms.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">13. Governing Law</h3>
+          <p className="text-gray-700 mb-4">
+            These terms are governed by and construed in accordance with the laws of [Your Jurisdiction]. Any legal action 
+            must be brought within one year after the claim arose.
+          </p>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">14. Contact Information</h3>
+          <p className="text-gray-700 mb-4">
+            For questions about these Terms & Conditions, please contact us at:
+          </p>
+          <div className="text-gray-700 mb-4">
+            <p><strong>Email:</strong> Atullakra9100@gmail.com</p>
+            <p><strong>Phone:</strong> +1 (787) 303-9920</p>
+          </div>
+
+          <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">15. Severability</h3>
+          <p className="text-gray-700 mb-4">
+            If any provision of these terms is found to be unenforceable or invalid, the remaining provisions will continue 
+            to be valid and enforceable to the fullest extent permitted by law.
+          </p>
+        </div>
+        
+        <div className="mt-6 pt-4 border-t">
+          <button 
+            onClick={() => setShowTerms(false)}
+            className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   const fetchContent = async (): Promise<void> => {
     try {
       setLoading(true);
       
-      // Fetch courses
+      // Fetch courses from courses table - Fixed to include image_url
       const { data: coursesData, error: coursesError } = await supabase
         .from('courses')
-        .select('*');
+        .select('id, title, description, price, image_url, preview_url, file_url');
       
-      if (coursesError) throw coursesError;
+      if (coursesError) {
+        console.error('Error fetching courses:', coursesError);
+        setCourses([]);
+      } else {
+        console.log('Courses fetched:', coursesData);
+        setCourses(coursesData as Course[] || []);
+      }
       
-      // Fetch ebooks from products table
+      // Fetch ebooks from products table - Fixed to include image_url
       const { data: ebooksData, error: ebooksError } = await supabase
         .from('products')
-        .select('*');
+        .select('id, title, description, price, image_url, preview_url, file_url');
       
-      if (ebooksError) throw ebooksError;
+      if (ebooksError) {
+        console.error('Error fetching ebooks:', ebooksError);
+        setEbooks([]);
+      } else {
+        console.log('Ebooks fetched:', ebooksData);
+        setEbooks(ebooksData as Ebook[] || []);
+      }
       
-      setCourses(coursesData as Course[] || []);
-      setEbooks(ebooksData as Ebook[] || []);
     } catch (error) {
-      console.error('Error fetching content:', error);
-      // Fallback to empty arrays if database fetch fails
+      console.error('Error in fetchContent:', error);
       setCourses([]);
       setEbooks([]);
     } finally {
@@ -104,10 +248,15 @@ const TradingPlatform: React.FC = () => {
         .select('*')
         .eq('user_id', userId);
 
-      if (error) throw error;
-      setPurchasedItems(data as Purchase[] || []);
+      if (error) {
+        console.error('Error fetching purchases:', error);
+        setPurchasedItems([]);
+      } else {
+        console.log('Purchases fetched:', data);
+        setPurchasedItems(data as Purchase[] || []);
+      }
     } catch (error) {
-      console.error('Error fetching purchases:', error);
+      console.error('Error in fetchPurchases:', error);
       setPurchasedItems([]);
     }
   };
@@ -139,7 +288,19 @@ const TradingPlatform: React.FC = () => {
     return new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD'
-    }).format(price);
+    }).format(price || 0);
+  };
+
+  const openPreview = (url: string): void => {
+    if (url) {
+      setPreviewUrl(url);
+    } else {
+      alert('Preview not available for this item');
+    }
+  };
+
+  const closePreview = (): void => {
+    setPreviewUrl(null);
   };
 
   const checkout = async (): Promise<void> => {
@@ -149,13 +310,13 @@ const TradingPlatform: React.FC = () => {
     }
 
     try {
-      // For demo purposes, we'll simulate a purchase without user authentication
+      // For demo purposes, we'll simulate a purchase
       const purchases: Omit<Purchase, 'id'>[] = cartItems.map((item: CartItem) => ({
         user_id: user?.id || 'demo-user-' + Date.now(),
         course_id: item.type === 'course' ? item.id : null,
         product_id: item.type === 'ebook' ? item.id : null,
         purchase_date: new Date().toISOString(),
-        price_paid: item.price
+        price_paid: item.price || 0
       }));
 
       // If user exists, insert to database, otherwise simulate purchase
@@ -164,7 +325,11 @@ const TradingPlatform: React.FC = () => {
           .from('user_purchases')
           .insert(purchases);
 
-        if (error) throw error;
+        if (error) {
+          console.error('Purchase error:', error);
+          alert('Purchase failed: ' + error.message);
+          return;
+        }
         await fetchPurchases(user.id);
       } else {
         // Simulate purchase for demo
@@ -173,7 +338,7 @@ const TradingPlatform: React.FC = () => {
 
       setCartItems([]);
       setCartOpen(false);
-      alert('Purchase successful!');
+      alert('Purchase successful! Check "My Courses" to access your content.');
     } catch (error) {
       console.error('Purchase error:', error);
       alert('Purchase failed: ' + (error as Error).message);
@@ -202,9 +367,13 @@ const TradingPlatform: React.FC = () => {
     <div key={`${course.id}-${isPurchasedItem ? 'purchased' : 'available'}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative">
         <img 
-          src={isPurchasedItem ? (course.file_url || course.preview_url || '/api/placeholder/400/250') : (course.preview_url || '/api/placeholder/400/250')} 
+          src={course.image_url || '/api/placeholder/400/250'} 
           alt={course.title} 
           className="w-full h-48 object-cover" 
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80';
+          }}
         />
         <div className="absolute top-4 right-4 text-white px-2 py-1 rounded-full text-xs font-semibold" style={{ backgroundColor: 'rgba(30, 58, 138, 0.95)' }}>
           COURSE
@@ -219,6 +388,19 @@ const TradingPlatform: React.FC = () => {
             Video Course
           </div>
         </div>
+        
+        {/* Preview Button - Always visible */}
+        <div className="mb-3">
+          <button
+            onClick={() => openPreview(course.preview_url || '')}
+            disabled={!course.preview_url}
+            className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 disabled:from-gray-300 disabled:to-gray-400 text-white py-2 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+          >
+            <span>👁️</span>
+            <span>{course.preview_url ? 'Preview Course' : 'Preview Not Available'}</span>
+          </button>
+        </div>
+
         {isPurchasedItem ? (
           <button 
             onClick={() => course.file_url && window.open(course.file_url, '_blank')}
@@ -226,7 +408,7 @@ const TradingPlatform: React.FC = () => {
             disabled={!course.file_url}
           >
             <span>▶️</span>
-            <span>Access Course</span>
+            <span>{course.file_url ? 'Access Course' : 'Course Unavailable'}</span>
           </button>
         ) : isPurchased(course.id, 'course') ? (
           <button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
@@ -251,9 +433,13 @@ const TradingPlatform: React.FC = () => {
     <div key={`${ebook.id}-${isPurchasedItem ? 'purchased' : 'available'}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative">
         <img 
-          src={isPurchasedItem ? (ebook.file_url || ebook.preview_url || '/api/placeholder/300/400') : (ebook.preview_url || '/api/placeholder/300/400')} 
+          src={ebook.image_url || '/api/placeholder/300/400'} 
           alt={ebook.title} 
           className="w-full h-48 object-cover" 
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=400&q=80';
+          }}
         />
         <div className="absolute top-4 right-4 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
           E-BOOK
@@ -268,6 +454,19 @@ const TradingPlatform: React.FC = () => {
             PDF Guide
           </div>
         </div>
+        
+        {/* Preview Button - Always visible */}
+        <div className="mb-3">
+          <button
+            onClick={() => openPreview(ebook.preview_url || '')}
+            disabled={!ebook.preview_url}
+            className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 disabled:from-gray-300 disabled:to-gray-400 text-white py-2 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+          >
+            <span>👁️</span>
+            <span>{ebook.preview_url ? 'Preview E-book' : 'Preview Not Available'}</span>
+          </button>
+        </div>
+
         {isPurchasedItem ? (
           <button 
             onClick={() => ebook.file_url && window.open(ebook.file_url, '_blank')}
@@ -275,7 +474,7 @@ const TradingPlatform: React.FC = () => {
             disabled={!ebook.file_url}
           >
             <span>📥</span>
-            <span>Download PDF</span>
+            <span>{ebook.file_url ? 'Download PDF' : 'File Unavailable'}</span>
           </button>
         ) : isPurchased(ebook.id, 'ebook') ? (
           <button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
@@ -309,7 +508,7 @@ const TradingPlatform: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
-      <nav className="shadow-lg sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+      <nav className="shadow-lg sticky top-0 z-40 backdrop-blur-sm bg-white/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Mobile menu button */}
@@ -396,7 +595,7 @@ const TradingPlatform: React.FC = () => {
         </div>
       </nav>
 
-      {/* Hero Section with Background Image */}
+      {/* Hero Section */}
       <section className="text-white py-20 relative overflow-hidden" style={{ background: 'linear-gradient(to right, rgba(30, 58, 138, 0.95), rgba(30, 58, 138, 0.8))' }}>
         {/* Background Image */}
         <div 
@@ -567,19 +766,65 @@ const TradingPlatform: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-300">
             &copy; 2025 Corepnl. All rights reserved. |{' '}
-            <a href="privacy.html" className="text-blue-400 hover:underline transition-colors">Privacy Policy</a> |{' '}
-            <a href="refund.html" className="text-gray-400 hover:text-gray-300 transition-colors">Refund Policy</a>
+            <a href="/privacy" className="text-blue-400 hover:underline transition-colors">Privacy Policy</a> |{' '}
+            <a href="/refund" className="text-gray-400 hover:text-gray-300 transition-colors">Refund Policy</a> |{' '}
+            <button 
+              onClick={() => setShowTerms(true)}
+              className="text-blue-400 hover:text-blue-300 transition-colors hover:underline cursor-pointer"
+            >
+              Terms & Conditions
+            </button>
           </p>
         </div>
       </footer>
 
-      {/* Enhanced Cart Sidebar */}
+      {/* Terms Modal */}
+      {showTerms && <TermsAndConditions />}
+
+      {/* Preview Modal - Updated for better PDF handling */}
+      {previewUrl && (
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-6xl max-h-[95vh] w-full overflow-hidden">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h3 className="text-xl font-bold text-gray-800">Document Preview</h3>
+              <button 
+                onClick={closePreview}
+                className="text-gray-500 hover:text-gray-800 text-2xl font-bold px-2"
+              >
+                ×
+              </button>
+            </div>
+            <div className="relative" style={{ height: 'calc(95vh - 80px)' }}>
+              <iframe
+                src={`${previewUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                className="w-full h-full border-0"
+                title="Document Preview"
+                onError={() => {
+                  console.error('Failed to load preview');
+                  alert('Preview could not be loaded. The file might be corrupted or inaccessible.');
+                  closePreview();
+                }}
+                onLoad={() => {
+                  console.log('Preview loaded successfully');
+                }}
+              />
+              {/* Fallback message */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-gray-500 pointer-events-none">
+                <p>Loading preview...</p>
+                <p className="text-sm mt-2">If preview doesn't load, <button onClick={() => window.open(previewUrl, '_blank')} className="text-blue-500 underline pointer-events-auto">click here to open in new tab</button></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Enhanced Cart Sidebar - Fixed transparent/blur background */}
       {cartOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 backdrop-blur-sm" onClick={() => setCartOpen(false)}>
-          <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-md z-50" onClick={() => setCartOpen(false)}>
+          <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white/95 backdrop-blur-lg shadow-2xl border-l border-gray-200" onClick={(e) => e.stopPropagation()}>
             <div className="flex flex-col h-full">
               {/* Cart Header */}
-              <div className="flex justify-between items-center p-6 border-b text-white" style={{ background: 'linear-gradient(to right, rgba(30, 58, 138, 0.95), rgba(30, 58, 138, 0.8))' }}>
+              <div className="flex justify-between items-center p-6 border-b bg-white/90 backdrop-blur-sm text-white" style={{ background: 'linear-gradient(to right, rgba(30, 58, 138, 0.95), rgba(30, 58, 138, 0.8))' }}>
                 <h3 className="text-xl font-bold">Shopping Cart</h3>
                 <button 
                   onClick={() => setCartOpen(false)} 
@@ -590,7 +835,7 @@ const TradingPlatform: React.FC = () => {
               </div>
 
               {/* Cart Items */}
-              <div className="flex-1 overflow-y-auto p-6">
+              <div className="flex-1 overflow-y-auto p-6 bg-white/90 backdrop-blur-sm">
                 {cartItems.length === 0 ? (
                   <div className="text-center text-gray-500 py-16">
                     <div className="text-6xl mb-4">🛒</div>
@@ -600,7 +845,7 @@ const TradingPlatform: React.FC = () => {
                 ) : (
                   <div className="space-y-4">
                     {cartItems.map((item: CartItem) => (
-                      <div key={`${item.id}-${item.type}`} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                      <div key={`${item.id}-${item.type}`} className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-gray-200 shadow-sm">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
                             <h4 className="font-semibold text-gray-800">{item.title}</h4>
@@ -633,7 +878,7 @@ const TradingPlatform: React.FC = () => {
 
               {/* Cart Footer */}
               {cartItems.length > 0 && (
-                <div className="border-t bg-gray-50 p-6">
+                <div className="border-t bg-white/90 backdrop-blur-sm p-6">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold text-gray-700">Total:</span>
                     <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
