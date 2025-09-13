@@ -34,11 +34,7 @@ export default function RefundPage() {
             </p>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <Link href="/" className="text-sky-600 hover:text-sky-700 font-medium">
-              ← Back to Home
-            </Link>
-          </div>
+          
         </div>
       </div>
     </div>
