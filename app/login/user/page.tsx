@@ -777,7 +777,7 @@ const TradingPlatform: React.FC = () => {
     </p>
     <div className="text-gray-400 text-sm space-y-1">
       <p>Contact us:</p>
-      <p>📞 <a href="tel:+17873039920" className="hover:text-white transition-colors">+1 787-303-9920</a></p>
+      <p>📞 <a href="tel:+1 (782) 303-9920" className="hover:text-white transition-colors">+1 (782) 303-9920</a></p>
       <p>📧 <a href="mailto:Atullakra9100@gmail.com" className="hover:text-white transition-colors">Atullakra9100@gmail.com</a></p>
     </div>
   </div>
