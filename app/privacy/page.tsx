@@ -30,17 +30,14 @@ export default function PrivacyPage() {
 
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
             <p className="text-gray-600 mb-6">
-              If you have any questions about this Privacy Policy, please contact us at privacy@corepnl.com
+              If you have any questions about this Privacy Policy, please contact us at info@corepnl.com
             </p>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <Link href="/" className="text-sky-600 hover:text-sky-700 font-medium">
-              ← Back to Home
-            </Link>
-          </div>
+          
         </div>
       </div>
     </div>
   )
 }
+
