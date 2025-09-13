@@ -763,20 +763,26 @@ const TradingPlatform: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-300">
-            &copy; 2025 Corepnl. All rights reserved. |{' '}
-            <a href="/privacy" className="text-blue-400 hover:underline transition-colors">Privacy Policy</a> |{' '}
-            <a href="/refund" className="text-gray-400 hover:text-gray-300 transition-colors">Refund Policy</a> |{' '}
-            <button 
-              onClick={() => setShowTerms(true)}
-              className="text-blue-400 hover:text-blue-300 transition-colors hover:underline cursor-pointer"
-            >
-              Terms & Conditions
-            </button>
-          </p>
-        </div>
-      </footer>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+    <p className="text-gray-300">
+      &copy; 2025 Corepnl. All rights reserved. |{' '}
+      <a href="/privacy" className="text-blue-400 hover:underline transition-colors">Privacy Policy</a> |{' '}
+      <a href="/refund" className="text-gray-400 hover:text-gray-300 transition-colors">Refund Policy</a> |{' '}
+      <button 
+        onClick={() => setShowTerms(true)}
+        className="text-blue-400 hover:text-blue-300 transition-colors hover:underline cursor-pointer"
+      >
+        Terms & Conditions
+      </button>
+    </p>
+    <div className="text-gray-400 text-sm space-y-1">
+      <p>Contact us:</p>
+      <p>📞 <a href="tel:+17873039920" className="hover:text-white transition-colors">+1 787-303-9920</a></p>
+      <p>📧 <a href="mailto:Atullakra9100@gmail.com" className="hover:text-white transition-colors">Atullakra9100@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+
 
       {/* Terms Modal */}
       {showTerms && <TermsAndConditions />}
